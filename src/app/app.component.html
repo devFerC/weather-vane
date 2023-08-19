@@ -1,0 +1,80 @@
+<!-- Search form for entering city names. -->
+<div class="search">
+   <!-- Create a form with Angular's template-driven forms approach. -->
+  <form #form="ngForm" (submit) ="onSubmit()">
+    <!-- User input for city name. Two-way data binding is used to bind the input to 'cityName' property in the component. -->
+    <input type="text" placeholder ="Search city" name="city" [(ngModel)] = "cityName"/>
+  </form>
+</div>
+
+<!-- Weather data container, only displayed when 'weatherData' is not null or undefined. -->
+<div class="container" *ngIf="weatherData">
+  <div class="upper-data">
+    <!-- Display hot or cold weather background if the temperature is above or below 15°C. -->
+    <img src="../assets/hot-bg.jpg" *ngIf ="weatherData.main.temp > 15"/>
+    <img src="../assets/cold-bg.jpg" *ngIf ="weatherData.main.temp <= 15"/>
+
+    <div class="weather-data">
+      <div class="location">{{weatherData.name}}</div>
+      <!-- Display temperature. It is piped through Angular's 'number' pipe for formatting. -->
+      <div class="temperature">{{weatherData.main.temp| number: '1.0-0'}}°C</div>
+    </div>
+  </div>
+
+  <div class="lower-data">
+    <div class="more-info-label">
+      More Information
+    </div>
+    <div class="more-info-container">
+      <!-- Display minimum temperature -->
+      <div class="info-block">
+        <div class="info-block-label">
+          <img src="../assets/cold-temp.png" />
+          <span>min</span>
+        </div>
+        <div class="info-block-value">
+          {{weatherData.main.temp_min| number: '1.0-0'}}°C
+        </div>
+      </div>
+
+      <!-- Display maximum temperature -->
+      <div class="info-block">
+        <div class="info-block-label">
+          <img src="../assets/hot-temp.png" />
+          <span>max</span>
+        </div>
+        <div class="info-block-value">
+          {{weatherData.main.temp_max| number: '1.0-0'}}°C
+        </div>
+      </div>
+
+      <!-- Display humidity -->
+      <div class="info-block">
+        <div class="info-block-label">
+          <img src="../assets/humidity.png" />
+          <span>humidity</span>
+        </div>
+        <div class="info-block-value">
+          {{weatherData.main.humidity}} %
+        </div>
+      </div>
+
+      <!-- Display wind speed -->
+      <div class="info-block">
+        <div class="info-block-label">
+          <img src="../assets/windspeed.png" />
+          <span>wind</span>
+        </div>
+        <div class="info-block-value">
+          {{weatherData.wind.speed}} km/h
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Display a static background image -->
+<img src="../assets/bg-blob.png" class="background-blob" alt="Background Blob" />
+
+<!-- Angular Router placeholder. Other components get loaded based on the current route here. -->
+<router-outlet></router-outlet>
